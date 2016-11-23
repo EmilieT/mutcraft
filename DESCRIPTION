@@ -1,0 +1,23 @@
+Package: mutcraft
+Type: Package
+Title: functions to decipher and plot mutation data
+Version: 0.1
+Date: 2016-11-23
+Author: Emilie Thomas & Laurie Tonon
+Maintainer: Laurie Tonon <laurie.tonon@lyon.unicancer.fr>,
+  Emilie Thomas <emilie.thomas@lyon.unicancer.fr>
+Imports:
+    ggplot2,
+    scales,
+    VariantAnnotation
+Depends:
+    R
+Description: ...
+License: ...
+LazyLoad: yes
+RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown,
+    BSgenome,
+    BSgenome.Hsapiens.UCSC.hg19
+VignetteBuilder: knitr
