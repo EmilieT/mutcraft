@@ -13,7 +13,7 @@ Imports:
 Depends:
     R
 Description: ...
-License: ...
+License: GPL-3.0
 LazyLoad: yes
 RoxygenNote: 5.0.1
 Suggests: knitr,
