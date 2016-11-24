@@ -2,7 +2,12 @@
 
 export(mc.loadVcf)
 export(mc.loadVcfs)
+export(mc.mutContext)
 export(mc.mutSpectrum)
+export(mc.plotContext)
 export(mc.plotSpectrum)
+import(SummarizedExperiment)
 import(VariantAnnotation)
 import(ggplot2)
+import(ggthemes)
+import(scales)

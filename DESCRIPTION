@@ -9,9 +9,11 @@ Maintainer: Laurie Tonon <laurie.tonon@lyon.unicancer.fr>,
 Imports:
     ggplot2,
     scales,
-    VariantAnnotation
+    VariantAnnotation,
+    SummarizedExperiment,
+    ggthemes
 Depends:
-    R
+    R (>= 2.10)
 Description: ...
 License: GPL-3.0
 LazyLoad: yes

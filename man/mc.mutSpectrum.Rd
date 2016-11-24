@@ -4,7 +4,8 @@
 \alias{mc.mutSpectrum}
 \title{Make mutations table}
 \usage{
-mc.mutSpectrum(mutnet.obj, col.ref = "ref.allele", col.alt = "alt.allele")
+mc.mutSpectrum(mutnet.obj, col.ref = "ref.allele", col.alt = "alt.allele",
+  nuc = c("A", "C", "G", "T"), symetrize = T)
 }
 \arguments{
 \item{mutnet.obj}{A dataframe of mutation info}
@@ -12,6 +13,10 @@ mc.mutSpectrum(mutnet.obj, col.ref = "ref.allele", col.alt = "alt.allele")
 \item{col.ref}{Name of the column with the reference alleles}
 
 \item{col.alt}{Name of the column with the alt alleles}
+
+\item{nuc}{Array of used nucleotides}
+
+\item{symetrize}{Boolean to symetrize reversable mutations or not}
 }
 \value{
 A table with the counts and proportions of each mutation type

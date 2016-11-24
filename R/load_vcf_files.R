@@ -21,11 +21,13 @@ mc.loadVcfs <- function(vcf.files, sample.names, ref.genome) {
     stop("Please provide a reference genome")
   }
   
+  print("Loading VCFs files ...")
+  
   mut <- lapply(vcf.files, function(f)
     mc.loadVcf(f, ref.genome))
   names(mut) <- sample.names
   for (i in 1:length(mut))
-    mut[[i]]$sample.names <- sample.names[i]
+    mut[[i]]$sample.name <- sample.names[i]
   
   return(mut)
 
@@ -41,6 +43,7 @@ mc.loadVcfs <- function(vcf.files, sample.names, ref.genome) {
 #' @export
 #'
 #' @import VariantAnnotation
+#' @import SummarizedExperiment
 #'
 #' @examples
 mc.loadVcf <- function(vcf.file, ref.genome) {
@@ -59,15 +62,6 @@ mc.loadVcf <- function(vcf.file, ref.genome) {
   # restrict to SSM
   vcf.m <- vcf[isSNV(vcf)]
   
-  # extract context of each mutation
-  context <-
-    as.character(getSeq(
-      get(ref.genome),
-      seqnames(vcf.m),
-      start(vcf.m) - 3,
-      end(vcf.m) + 3
-    ))
-  
   
   ranges <- rowRanges(vcf.m, fixed = T)
   
@@ -82,14 +76,19 @@ mc.loadVcf <- function(vcf.file, ref.genome) {
   gr$geno.norm <- genotypes[, 2]
   
   # extract allelic counts in normal and tumor
-  allelic.counts <- geno(vcf.m)$AD
-  AD.tum <- do.call("rbind", allelic.counts[, 1])
-  AD.norm <- do.call("rbind", allelic.counts[, 2])
-  gr$ref.tum.count <- AD.tum[, 1]
-  gr$alt.tum.count <- AD.tum[, 2]
-  gr$ref.norm.count <- AD.norm[, 1]
-  gr$alt.norml.count <- AD.norm[, 2]
+  allelic.counts <- geno(vcf.m)$AD 
+  gr$ref.tum.count <- gr$alt.tum.count <- gr$ref.norm.count <- gr$alt.norml.count <- rep(0, nrow(gr))
   
+  if(!is.null(allelic.counts)){
+    AD.tum <- do.call("rbind", allelic.counts[, 1])
+    AD.norm <- do.call("rbind", allelic.counts[, 2])
+    gr$ref.tum.count <- AD.tum[, 1]
+    gr$alt.tum.count <- AD.tum[, 2]
+    gr$ref.norm.count <- AD.norm[, 1]
+    gr$alt.norml.count <- AD.norm[, 2]
+  }else{
+    warning("missing allelic counts info")
+  }
   
   mutnet.obj <-
     data.frame(
@@ -108,7 +107,6 @@ mc.loadVcf <- function(vcf.file, ref.genome) {
   
   mutnet.obj <- mc.formatGenotype(mutnet.obj)
   
-  mutnet.obj <- mc.formatAndAddContext(mutnet.obj, context)
   
   return(mutnet.obj)
   
@@ -141,21 +139,4 @@ mc.formatGenotype <- function(mutnet.obj) {
   mutnet.obj$normal.gt <- new.gt
   
   return(mutnet.obj)
-}
-
-
-mc.formatAndAddContext <- function(mutnet.obj, context) {
-  new.context <- rep(NA, length(context))
-  
-  for (i in 1:length(context)) {
-    sp <- strsplit(context[i], "")[[1]]
-    sp[4] <- "x"
-    new.context[i] <- paste(sp, collapse = '')
-    
-  }
-  
-  mutnet.obj$context <- new.context
-  
-  return(mutnet.obj)
-  
 }
