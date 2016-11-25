@@ -11,7 +11,7 @@ vignette: >
 
 
 # Getting started
-Mutcraft is a package of funtions to read somatic mutation information from VCF files and visualize spectra, rainplots, strand bias and mutational signatures.
+Mutcraft is a package of functions to read somatic mutation information from VCF files and visualize spectra, rainplots, strand bias and mutational signatures.
 
 ## Installation
 ```{r , message=FALSE, warning=FALSE}
