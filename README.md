@@ -44,6 +44,15 @@ mc.plotSpectrum(mutspec,"prop",print.num=F)
 
 ![](README-unnamed-chunk-5-1.png)
 
+Spider Spectrum
+---------------
+
+``` r
+mc.plotSpider(mutspec)
+```
+
+![](README-unnamed-chunk-6-1.png)
+
 Add mutations context
 ---------------------
 
@@ -58,4 +67,14 @@ Plot context histogram
 mc.plotContext(mut.c)
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![](README-unnamed-chunk-8-1.png)
+
+Rainfall plots
+--------------
+
+``` r
+mutrain <- lapply(mutnet, mc.mutRain, "chrom","pos", "ref.allele","alt.allele")
+mc.plotRain(mutrain[[1]], chrom.to.plot = c(1))
+```
+
+![](README-unnamed-chunk-9-1.png)
