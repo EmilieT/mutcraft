@@ -22,3 +22,7 @@ mut.c <- lapply(mutnet, mc.mutContext, ref_genome)
 ## ---- message=FALSE, warning=FALSE, fig.width=7,fig.height=5-------------
 mc.plotContext(mut.c)
 
+## ---- message=FALSE, warning=FALSE, fig.width=8,fig.height=5-------------
+mutrain <- lapply(mutnet, mc.mutRain, "chrom","pos", "ref.allele","alt.allele")
+mc.plotRain(mutrain[[1]], chrom.to.plot = c(1))
+

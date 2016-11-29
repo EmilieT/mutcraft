@@ -19,7 +19,11 @@ mc.mutRain <- function(mutnet.obj, col.chrom="chrom", col.pos="pos", col.ref="re
   
   ## distance
   m0$d <- c(NA,m0[-1,col.pos] - m0[-nrow(m0),col.pos]) 
-  w <- unlist(lapply(unique(m0[,col.chrom]),function(chr) min(which(m0[,col.chrom] == chr))))
+  w <- unlist(lapply(unique(m0[,col.chrom]),function(chr) {
+    if(!is.na(chr)){
+      min(which(m0[,col.chrom] == chr))
+    }
+    }))
   m0$d[w] <- NA
   
   if(!is.null(col.ref) & !is.null(col.alt)){

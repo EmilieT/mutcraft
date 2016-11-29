@@ -33,7 +33,7 @@ mc.plotRain <- function(mutrain, chrom.to.plot = NULL, color.col="mut"){
   if(color.col != "mut") names(mutrain)[names(mutrain) == color.col] <- "mut"
   ###
   
-  p <- ggplot(mutrain,aes(x=pos,y=d,col=mut)) + theme_linedraw() + geom_point() + scale_y_log10() + scale_color_tableau(guide = guide_legend(title = "Mutation Type", nrow =  3)) + labs(title="Rainfall Plot", x="Position", y="Distance") + theme(axis.ticks = element_blank(), axis.text.x = element_blank())
+  p <- ggplot(mutrain,aes(x=pos,y=d,col=mut)) + theme_linedraw() + geom_point(na.rm=TRUE) + scale_y_log10() + scale_color_tableau(guide = guide_legend(title = "Mutation Type", nrow =  3)) + labs(title="Rainfall Plot", x="Position", y="Distance") + theme(axis.ticks = element_blank(), axis.text.x = element_blank())
   
   if(length(chrom.to.plot > 1)){
     if(length(table(mutrain$sample.name)) <= 1){
