@@ -12,7 +12,7 @@
 #' @import VariantAnnotation
 #'  
 #' @examples
-mc.loadVcfs <- function(vcf.files, sample.names, ref.genome) {
+mc.loadVcfs <- function(vcf.files, sample.names, ref.genome,...) {
   if (length(vcf.files) != length(sample.names)) {
     stop("Number of sample names different than number of files")
   }
@@ -23,8 +23,8 @@ mc.loadVcfs <- function(vcf.files, sample.names, ref.genome) {
   
   print("Loading VCFs files ...")
   
-  mut <- lapply(vcf.files, function(f)
-    mc.loadVcf(f, ref.genome))
+  mut <- mclapply(vcf.files, function(f)
+    mc.loadVcf(f, ref.genome),...)
   names(mut) <- sample.names
   for (i in 1:length(mut))
     mut[[i]]$sample.name <- sample.names[i]
