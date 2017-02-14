@@ -5,6 +5,7 @@
 #' @param vcf.files A character vector of vcf file names
 #' @param sample.names A character vector of sample names
 #' @param ref.genome Name of the loaded reference genome
+#' @param ... mclapply optional parameters
 #'
 #' @return A list of dataframes, one for each vcf file
 #' @export
