@@ -5,6 +5,7 @@
 #' @param vcf.files A character vector of vcf file names
 #' @param sample.names A character vector of sample names
 #' @param ref.genome Name of the loaded reference genome
+#' @param ... mclapply optional parameters
 #'
 #' @return A list of dataframes, one for each vcf file
 #' @export
@@ -12,7 +13,7 @@
 #' @import VariantAnnotation
 #'  
 #' @examples
-mc.loadVcfs <- function(vcf.files, sample.names, ref.genome) {
+mc.loadVcfs <- function(vcf.files, sample.names, ref.genome,...) {
   if (length(vcf.files) != length(sample.names)) {
     stop("Number of sample names different than number of files")
   }
@@ -23,8 +24,8 @@ mc.loadVcfs <- function(vcf.files, sample.names, ref.genome) {
   
   print("Loading VCFs files ...")
   
-  mut <- lapply(vcf.files, function(f)
-    mc.loadVcf(f, ref.genome))
+  mut <- mclapply(vcf.files, function(f)
+    mc.loadVcf(f, ref.genome),...)
   names(mut) <- sample.names
   for (i in 1:length(mut))
     mut[[i]]$sample.name <- sample.names[i]

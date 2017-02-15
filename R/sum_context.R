@@ -12,6 +12,7 @@
 #' @return A dataframe with each mutation and context, with frequencies and proportions
 #'
 #' @examples
+
 mc.sumContext <- function(mutnet.obj, base.ref.col="ref.allele", base.alt.col="alt.allele", base.3p.col = "base.3p", base.5p.col="base.5p", trinuc.pc, symetrize=c(TRUE,FALSE)[1]){
   
   if(!is.data.frame(mutnet.obj))
