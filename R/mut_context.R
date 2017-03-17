@@ -2,23 +2,28 @@
 #' Add context bases to mutations
 #'
 #' @param mutnet.obj A dataframe of mutations
-#' @param ref.genome Name of the loaded reference genome 
+#' @param ref.genome Name of the loaded reference genome ; if NULL the function will use the "context" column of the dataframe
 #'
 #' @return The dataframe with context bases added
 #' 
 #' @export
 #'
 #' @examples
-mc.mutContext <- function(mutnet.obj, ref.genome){
+mc.mutContext <- function(mutnet.obj, ref.genome=NULL){
   
   # extract context of each mutation
-  context <-
-    as.character(getSeq(
-      get(ref.genome),
-      Rle(mutnet.obj$chrom),
-      mutnet.obj$pos.1 - 3,
-      mutnet.obj$pos.1 + 3
-    ))
+  if(!is.null(ref.genome)){
+    context <-
+      as.character(getSeq(
+        get(ref.genome),
+        Rle(mutnet.obj$chrom),
+        mutnet.obj$pos.1 - 3,
+        mutnet.obj$pos.1 + 3
+      ))
+  }else if(is.null(ref.genome) & "context" %in% names(mutnet.obj)){
+    context <- mutnet.obj$context
+  }else{
+    stop("please provide an avalable ref.genome object")}
   
   # format
   new.context <- base.3p <- base.5p <- rep(NA, length(context))
